@@ -1,0 +1,15 @@
+#%RAML 1.0 DataType
+displayName: address
+
+type: !include geometry.raml
+properties: 
+  lines: 
+    type: array
+    items: string
+    required: false
+    description: Address lines
+  location: 
+    type: !include point.raml
+    required: false
+    description: Address geolocation
+

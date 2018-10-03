@@ -1,0 +1,27 @@
+#%RAML 1.0 NamedExample
+value:
+  {
+    "transitions": 
+      [
+        {
+          "name": "Demobilize",
+          "to": {
+            "value": "Demobilized"
+          },
+          "fields": {
+            "name": "resolution",
+            "type": "resolution"
+          }
+        },
+        {
+          "name": "Close",
+          "to": {
+            "value": "Closed"
+          },
+          "fields": {
+            "name": "resolution",
+            "type": "resolution"
+          }
+        }
+      ]
+  }

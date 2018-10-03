@@ -1,0 +1,24 @@
+#%RAML 1.0 DataType
+displayName: subject
+description: Generalization of subjects affected by the incident
+
+type: object
+properties: 
+  id: 
+    type: string
+    required: true
+    description: Globally Unique Identifier (GUID)
+  nationality:
+    required: false
+    description: Subject nationality
+    properties: 
+      locale:
+        type: string
+        required: true
+        description: Subject locale
+        example: nb_NO
+      country:
+        type: string
+        required: true
+        description: Country name
+        example: Norway

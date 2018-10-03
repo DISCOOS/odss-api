@@ -1,0 +1,25 @@
+#%RAML 1.0 DataType
+displayName: clue
+
+type: !include identity.raml
+properties: 
+    name:
+      type: string
+      required: true
+      description: Clue name
+    type:
+      enum: [Fact, Observation, Indication, Rumour]
+      required: true
+      description: Clue type
+    quality:
+      enum: [Verified, High, Moderate, Low]
+      required: true
+      description: Clue quality
+    description:
+      type: string
+      required: true
+      description: Detailed description of clue 
+    address: 
+      type: !include address.raml
+      required: false
+      description: Clue address. Used for positioning (optional) 

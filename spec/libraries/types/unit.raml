@@ -1,0 +1,27 @@
+#%RAML 1.0 DataType
+
+type: !include identity.raml
+properties: 
+  number:
+    type: integer
+    required: false
+  type: 
+    enum: [Team, Dog, Car, ATV, Boat, Heli, Plane, Other]
+    required: false
+    examples:
+      Team: Team
+  callsign:
+    type: string
+    required: false
+  missions:
+    type: array
+    items: !include mission.raml
+    required: false
+  personnel:
+    type: array
+    items: !include personnel.raml
+    required: false
+  transports:
+    type: array
+    items: !include transport.raml
+    required: false

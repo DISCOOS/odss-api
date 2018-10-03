@@ -1,0 +1,39 @@
+#%RAML 1.0 DataType
+displayName: affiliation
+
+type: object
+properties: 
+  organization:
+    properties: 
+      identifier:
+        type: any
+        required: true
+        description: Organization identifier
+        example: 864139442
+      name:
+        type: string
+        required: true
+        description: Organization name
+        example: Norwegian Red Cross Search and Rescue
+  department:
+    properties:
+      identifier:
+        type: any
+        required: false
+        description: Department identifier
+        example: 03
+      name:
+        required: false
+        description: Department name
+        example: Oslo Red Cross Search and Rescue District
+  section:
+    properties:
+      identifier:
+        type: any
+        required: false
+        description: Section identifier
+        example: 0300903
+      name:
+        required: false
+        description: Section name
+        example: Oslo Red Cross Search and Rescue Corps

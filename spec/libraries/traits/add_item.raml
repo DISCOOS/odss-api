@@ -1,0 +1,25 @@
+#%RAML 1.0 Trait
+displayName: Add <<resourcePathName|!singularize>>
+description: Add a new <<resourcePathName|!singularize>> to collection.
+
+uses: 
+  types: ../types.raml
+
+body:
+  application/json:
+    type: types.<<resourcePathName|!singularize>>
+    example: <<example>>
+
+responses:
+  200:
+    body:
+      application/json:
+        type: object
+        example: 
+          message: The <<resourcePathName|!singularize>> has been properly entered
+  400:
+    body:
+      application/json:
+        type: object
+        example:
+          message: Bad Request – The request could not be understood or performed by the server due to malformed syntax and requires modifications before it can be performed.

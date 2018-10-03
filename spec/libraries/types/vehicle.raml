@@ -1,0 +1,19 @@
+#%RAML 1.0 DataType
+displayName: vehicle
+
+type: !include subject.raml
+properties: 
+  identifier:
+    type: string
+    required: true
+    description: Vehicle identifier
+    example: SN9999
+  type: 
+    enum: [Car, Boat, Aircraft]
+    required: true
+    description: Vehicle type
+    examples: 
+      Car: Car
+      Boat: Boat
+      Aircraft: Aircraft
+    

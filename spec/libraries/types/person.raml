@@ -1,0 +1,10 @@
+#%RAML 1.0 DataType
+displayName: person
+
+type: !include subject.raml
+properties:
+  name:
+    type: string
+    required: true
+    description: Full name
+    example: Kari Normann

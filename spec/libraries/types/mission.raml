@@ -1,0 +1,78 @@
+#%RAML 1.0 DataType
+displayName: mission
+
+type: !include identity.raml
+properties: 
+  number:
+    type: integer
+    required: true
+    description: Mission number
+  type: 
+    enum: [Search, Rescue, Transport, Other]
+    required: true
+    description: Mission type
+    examples: 
+      Search: Search
+      Rescue: Rescue
+      Transport: Transport
+      Other: Other
+  priority:
+    type: !include priority.raml
+    required: true
+    description: Mission priority
+    examples:
+      High:
+        value:
+          value: High
+      Medium:
+        value:
+          value: Medium
+      Low:
+        value:
+          value: Low
+  status: 
+    type: !include status.raml
+    required: true
+    default: 
+      value:
+        value: Planning
+    examples: 
+      Mobilizing: 
+        value:
+          value: Planning
+      OnScene: 
+        value:
+          value: Allocated
+      Demobilizing: 
+        value:
+          value: Execution
+      Closed: 
+        value:
+          value: Closed
+  description:
+    type: string
+    required: false
+    description: Mission description
+  geodata:
+    type: array
+    items: object
+  timestamps:
+    type: array
+    items: !include timestamp.raml
+    required: false
+  resolution: 
+    type: !include resolution.raml
+    required: false
+    default: 
+      value:
+        value: Unresolved
+    examples: 
+      Registered:
+        value:
+          value: Unresolved
+      Resolved: 
+        value:
+          value: Resolved
+      Cancelled:
+        value:
+          value: Cancelled

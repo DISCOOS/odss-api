@@ -1,0 +1,13 @@
+#%RAML 1.0 DataType
+displayName: severity
+description: Severity levels
+
+properties:
+  value:
+    enum: [Critical, High, Medium, Low]
+    required: true
+    examples:
+      Critical: Critical      
+      High: High
+      Medium: Medium
+      Low: Low

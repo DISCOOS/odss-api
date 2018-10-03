@@ -1,0 +1,120 @@
+#%RAML 1.0 DataType
+displayName: incident
+
+type: !include identity.raml
+properties: 
+  type: 
+    enum: [Missing, Accident, Disaster, Other]
+    required: false
+    examples: 
+      Missing: Missing
+      Accident: Accident
+      Disaster: Disaster
+      Other: Other
+  
+  situation:
+    type: string
+    required: false
+    description: Detailed description of incident
+    example: Aircraft attempted to land on highway and hit the car
+  
+  clues:
+    type: array
+    items: !include clue.raml
+    required: false
+    description: Clues important for incident handling.
+    example: | 
+      [
+        {
+          "id": "4bddecd8-ca17-4963-9715-73421e266b00",
+          "name": "Scene",
+          "type": "Fact",
+          "quality": "Verified",
+          "description": "Incident scene",
+          "address": {
+            "lines": [
+              "Hausmanns gate 7",
+              "0186 Oslo"
+            ],
+            "location": {         
+              "lon": 10.7558176,
+              "lat": 59.9155099,
+              "alt": 17
+            }
+          }
+        }        
+      ]
+  
+  severity:
+    type: !include severity.raml
+    required: false
+    description: Incident severity level
+    examples:
+      Critical:
+        value:
+          value: Critical
+      High:
+        value:
+          value: High
+      Medium:
+        value:
+          value: Medium
+      Low:
+        value:
+          value: Low
+  
+  status: 
+    type: !include status.raml
+    required: false
+    default: 
+      value:
+        value: Registered
+    examples: 
+      Registered:
+        value:
+          value: Registered
+      Handeling:
+        value:
+          value: Handeling
+      Closed:
+        value:
+          value: Closed
+  
+  resolution: 
+    type: !include resolution.raml
+    required: false
+    default: 
+      value:
+        value: Unresolved
+    examples: 
+      Registered:
+        value:
+          value: Unresolved
+      Resolved: 
+        value:
+          value: Resolved
+      Duplicate: 
+        value:
+          value: Duplicate
+  
+  timestamps:
+    type: array
+    items: !include timestamp.raml
+    required: false
+
+  persons:
+    type: array
+    items: !include person.raml
+    required: false
+    description: Persons involved
+
+  vehicles:
+    type: array
+    items: !include vehicle.raml
+    required: false
+    description: Vehicles involved
+
+  operations: 
+    type: array
+    items: !include operation.raml
+    required: false

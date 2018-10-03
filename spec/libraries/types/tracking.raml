@@ -1,0 +1,28 @@
+#%RAML 1.0 DataType
+displayName: tracking
+
+type: !include identity.raml
+properties: 
+  status: 
+    type: !include status.raml
+    required: true
+    description: Tracking status
+  unit: 
+    type: !include unit.raml
+    required: true
+    description: Tracking unit
+  location:
+    properties:
+      timestamp:
+        type: datetime
+        required: true
+        description: Registered at given datetime
+      point:
+        type: !include point.raml
+        required: true
+        description: Last known position
+  tracks: 
+    type: array
+    items: !include track.raml
+
+    

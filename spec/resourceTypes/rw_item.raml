@@ -1,0 +1,21 @@
+#%RAML 1.0 ResourceType
+displayName: <<resourcePathName|!singularize>>
+description: <<resourcePathName|!singularize>> with `<<item_id>> = {<<item_id>>}`
+
+uses: 
+  traits: ../libraries/traits.raml
+
+uriParameters:
+  <<item_id>>: 
+    type: string
+    description: Globally Unique Identifier (GUID)
+
+get:
+  is: [traits.secured, traits.read_item: {item_id: <<item_id>>, example: <<get_example>>}]
+
+patch:
+  is: [traits.secured, traits.update_item: {item_id: <<item_id>>, example: <<patch_example>>}]
+
+delete:
+  is: [traits.secured, traits.delete_item: {item_id: <<item_id>>}]
+  

@@ -1,0 +1,27 @@
+#%RAML 1.0 DataType
+displayName: personnel
+type: !include person.raml
+properties: 
+  managed:
+    enum: [locally, remotely]
+    required: true
+    default: locally
+    description: Management of personnel data is done locally (operation) or remotely (external system).
+  function: 
+    enum: [Incident Commander, Planning Manager, Operations Manager, Team Leader, Personnel]
+    required: false
+    default: Personnel
+    description: Function performed in operation
+  affiliation:
+    type: !include affiliation.raml 
+    required: false
+    description: Personnel association with an organization
+  address:
+    type: !include address.raml 
+    required: false
+    description: Personnel address
+  competences:
+    type: array
+    items: !include competence.raml
+    required: false
+    description: Personnel competences

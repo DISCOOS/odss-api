@@ -1,0 +1,78 @@
+#%RAML 1.0 NamedExample
+value:
+  {
+    "id": "326a54fc-60a7-4290-94ce-489e2096698d",
+    "type": "Accident",
+    "situation": "Car and aircraft has collided",
+    "clues": [
+      {
+        "id": "4bddecd8-ca17-4963-9715-73421e266b00",
+        "name": "Scene",
+        "type": "Fact",
+        "quality": "Verified",
+        "description": "Incident scene",
+        "address": {
+          "lines": [
+            "Hausmanns gate 7",
+            "0186 Oslo"
+          ],
+          "location": {         
+            "lon": 10.7558176,
+            "lat": 59.9155099,
+            "alt": 17
+          }
+        }
+      }        
+    ],
+    "severity": {
+      "value": "Critical"
+    },
+    "status": {
+      "value": "Handeling"
+    },
+    "resolution": {
+      "value": "Unresolved"
+    },
+    "timestamps": [
+      { 
+        "name": "created",
+        "datetime": "2018-01-01T15:00:00Z"
+      }
+    ],
+    "persons": [
+      {
+        "id": "7e5545b7-729c-4c8d-b99c-840dc97ac392",
+        "name": "Ola Normann"
+      }, 
+      {
+        "id": "6645bda5-2470-45bf-9600-e310dc686f24",
+        "name": "Kari Normann"
+      }
+    ],
+    "vehicles": [
+      {
+        "id": "ecb7ab3e-84b7-4656-83dd-f43ed2a20b90",
+        "identifier": "SN99999",
+        "type": "Car"
+      }, 
+      {
+        "id": "2bd9e09e-65aa-4612-80a7-b2959963d136",
+        "identifier": "LN-GKI",
+        "type": "Aircraft"
+      }
+    ],
+    "operations": [
+      {
+        "id": "d67773dc-cda7-4062-8539-9f1b4dad4a38",
+        "status": {
+          "value": "Mobilizing"
+        }
+      }, 
+      {
+        "id": "2120efce-7540-43c0-a914-598d02125232",
+        "status": {
+          "value": "OnScene"
+        }
+      }
+    ]
+  }

@@ -1,0 +1,10 @@
+#%RAML 1.0 DataType
+displayName: transport
+
+type: !include vehicle.raml
+properties: 
+  affiliation:
+    type: !include affiliation.raml 
+    required: false
+    description: Personnel association with an organization
+    

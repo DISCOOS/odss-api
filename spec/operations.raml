@@ -1,0 +1,424 @@
+#%RAML 1.0
+title: Norwegian Red Cross Operations API
+description: API for Norwegian Red Cross Operational Decision Support System (ODSS)   
+version: 1
+# baseUri: https://mocksvc.mulesoft.com/mocks/f7358053-e755-4928-9652-fc7eb2fea79e/odss/rest/api/v{version} # baseUri: https://mocksvc.mulesoft.com/mocks//odss/rest/api/v{version} 
+baseUri: https://api.redcross.no/odss/rest/api/v{version}
+
+securedBy: [null] # use `null` when mocking, use `oauth_2_0` in production
+
+securitySchemes:
+  oauth_2_0: !include securitySchemes/oauth_2_0.raml
+
+uses: 
+  types: libraries/types.raml
+  traits: libraries/traits.raml 
+
+resourceTypes: 
+  ro_collection: !include resourceTypes/ro_collection.raml
+  rw_collection: !include resourceTypes/rw_collection.raml
+  ro_item: !include resourceTypes/ro_item.raml
+  rw_item: !include resourceTypes/rw_item.raml
+  do_item: !include resourceTypes/do_item.raml
+  ad_item: !include resourceTypes/ad_item.raml
+
+/incidents:
+  description: Collection of active Incidents
+  type: 
+    rw_collection:
+      get_example: !include examples/incidents.raml
+      post_example: !include examples/incident.raml
+
+  get:
+    description: Get collection of active Incidents
+    is: 
+      [
+        traits.pageable,
+        traits.searchable: {
+            description: "with valid searchable fields: `type` (string), `status`", 
+            example: !include examples/search/incidents.raml
+        },           
+        traits.expand: {fields: "type,description,status,timestamps,persons,vehicles,operations"}
+      ]
+
+  /{incidentId}:
+    type: 
+      rw_item:
+        item_id: "incidentId"
+        get_example: !include examples/incident.raml
+        patch_example: !include examples/incident.raml
+
+    get:
+      is: [ traits.expand: {fields: "type,description,status,timestamps,persons,vehicles,operations"} ]
+
+    /clues:
+      description: Collection of clues important for handling.
+      type: 
+        rw_collection:
+          get_example: !include examples/clues.raml
+          post_example: !include examples/clue.raml
+          
+      /{clueId}:
+        type: 
+          rw_item:
+            item_id: "clueId"
+            get_example: !include examples/clue.raml
+            patch_example: !include examples/clue.raml   
+                     
+    /persons:
+      description: Collection of persons involved in the incident.
+      type: 
+        rw_collection:
+          get_example: !include examples/persons.raml
+          post_example: !include examples/person_ola.raml
+          
+      /{personId}:
+        type: 
+          rw_item:
+            item_id: "personId"
+            get_example: !include examples/person_kari.raml
+            patch_example: !include examples/person_ola.raml
+
+    /vehicles:
+      description: Collection of vehicles involved in the incident.
+      type: 
+        rw_collection:
+          get_example: !include examples/vehicles.raml
+          post_example: !include examples/vehicle_car.raml
+          
+      /{vehicleId}:
+        type: 
+          rw_item:
+            item_id: "vehicleId"
+            get_example: !include examples/vehicle_car.raml
+            patch_example: !include examples/vehicle_aircraft.raml
+/operations:
+  description: Collection of active Operations
+  type: 
+    rw_collection:
+      get_example: !include examples/operations.raml
+      post_example: !include examples/operation.raml
+
+  get:
+    description: Get a list of active Operations
+    is: 
+      [
+        traits.pageable, 
+        traits.expand: {fields: "type,status"},
+        traits.searchable: {
+            description: "with valid searchable fields: `type` (string), `status`", 
+            example: !include examples/search/operations.raml
+        }
+      ]
+
+  /{operationId}:
+    type: 
+      rw_item:
+        item_id: "operationId"
+        get_example: !include examples/operation.raml
+        patch_example: !include examples/operation.raml
+
+    get:
+      is: [traits.expand: {fields: "type,status"}]     
+
+    /missions:
+      description: Collection of missions which combined handles the incidents.
+      type: 
+        rw_collection:
+          get_example: !include examples/missions.raml
+          post_example: !include examples/mission.raml
+          
+      /{missionId}:
+        type: 
+          rw_item:
+            item_id: "missionId"
+            get_example: !include examples/mission.raml
+            patch_example: !include examples/mission.raml      
+      
+    /transitions:
+      description: Collection of allowed state transitions for this operation.
+      type: 
+        rw_collection:
+          get_example: !include examples/transitions.raml
+          post_example: !include examples/transition.raml
+    
+      get:
+        description: |
+          Get a list allowed state transitions for this operation, 
+          along with operation fields that are required and their types. 
+          Fields are only returned if `expand=transitions.fields` is given.
+        is: [traits.expand: {fields: "transitions.fields"}]     
+
+      post:
+        displayName: Perform Transition
+        description: |
+          Perform a transition on this operation. 
+          When performing the transition you can update or set other operation fields.
+        
+    /personnel:
+      displayName: mobilized personnel
+      description: Collection of Personnel mobilized for this Operation.
+      type: 
+        ro_collection:
+          get_example: !include examples/personnel.raml
+          
+      get:
+        displayName: Get mobilized Personnel
+        description: Get list of Personnel mobilized for this Operation.
+
+      /{personnelId}:
+        displayName: manage
+        type: 
+          ad_item:
+            item_id: "personnelId"
+            post_example: !include examples/personnel_kari.raml
+          
+        post:
+          displayName: Mobilize Personnel
+          description: Mobilize Personnel for this Operation.
+
+        delete:
+          displayName: Demobilize Personnel
+          description: Demobilize Personnel from this Operation.
+            
+    /transports:
+      displayName: mobilized transports
+      description: Collection of Transports mobilized for this Operation.
+      type: 
+        ro_collection:
+          get_example: !include examples/transports.raml
+          
+      get:
+        displayName: Get mobilized Transports
+        description: Get list of Transports demobilized from this Operation.
+
+      /{transportId}:
+        displayName: manage
+        type: 
+          ad_item:
+            item_id: "transportId"
+            post_example: !include examples/transport.raml
+
+        post:
+          displayName: Mobilize Transport
+          description: Mobilize Transport for this Operation.
+
+        delete:
+          displayName: Demobilize Transport
+          description: Demobilize Transports from this Operation.
+      
+    /units:
+      displayName: units
+      description: Collection of operational Units
+      type: 
+        rw_collection:
+          get_example: !include examples/units.raml
+          post_example: !include examples/unit.raml    
+
+      /{unitId}:
+        type: 
+          rw_item:
+            item_id: "unitId"
+            get_example: !include examples/unit.raml
+            patch_example: !include examples/unit.raml
+
+        /missions:
+          displayName: assigned missions
+          description: Collection of missions assigned to this Unit
+
+          type: 
+            ro_collection:
+              get_example: !include examples/missions.raml
+
+          get:
+            displayName: Get assigned mission
+            description: Get list of missions assigned to this Unit.
+
+          /{missionId}:
+            displayName: manage
+            type: 
+              ad_item:
+                item_id: "missionId"
+                post_example: !include examples/mission.raml
+
+            post:
+              displayName: Assign mission
+              description: Assign mission to this unit.
+
+            delete:
+              displayName: Release mission
+              description: Release mission from this Unit.
+
+        /personnel:
+          displayName: assigned personnel
+          description: Collection of personnel assigned to this Unit
+          type: 
+            ro_collection:
+              get_example: !include examples/personnel.raml
+
+          get:
+            displayName: Get assigned personnel
+            description: Get list of personnel assigned to this unit.
+
+          /{personnelId}:
+            displayName: manage
+            type: 
+              ad_item:
+                item_id: "personnelId"
+                post_example: !include examples/personnel_kari.raml
+
+            post:
+              displayName: Assign personnel
+              description: Assign personnel to this unit.
+
+            delete:
+              displayName: Release personnel
+              description: Release personnel from this unit.
+
+        /transports:
+          displayName: assigned transports
+          description: Collection of transports assigned to this unit
+          type: 
+            ro_collection:
+              get_example: !include examples/transports.raml
+
+          get:
+            displayName: Get assigned transports
+            description: Get list of transports assigned to this unit.
+
+          /{transportId}:
+            displayName: manage
+            type: 
+              ad_item:
+                item_id: "transportId"
+                post_example: !include examples/transport.raml
+
+            post:
+              displayName: Assign transport
+              description: Assign transport to this unit.
+
+            delete:
+              displayName: Release transport
+              description: Release transport from this unit. 
+
+    /tracking:
+      displayName: tracking
+      type: 
+        ro_collection:
+          get_example: !include examples/tracking.raml
+
+      get:
+        displayName: Get all tracking
+
+      /{unitId}:
+        displayName: unit
+        uriParameters:
+          unitId:
+            type: string
+            description: Globally Unique Identifier (GUID)
+
+        get:
+          displayName: Get tracking
+          is: [traits.secured, traits.read_item: {item_id: unitId, example: !include examples/tracking_car.raml}]
+
+        post:
+          displayName: Start  tracking          
+          is: [traits.secured, traits.update_item: {item_id: unitId, example: !include examples/tracking_car.raml}]
+
+        patch:
+          displayName: Stop tracking
+          is: [traits.secured, traits.update_item: {item_id: unitId, example: !include examples/tracking_car.raml}]
+
+        delete:
+          displayName: Delete tracking
+          is: [traits.secured, traits.delete_item: {item_id: unitId>}]
+          
+    /affiliations:
+      description: Collection of organizations contibution personnel
+      type: 
+        ro_collection:
+          get_example: !include examples/affiliations.raml
+      get:
+        is: [ traits.pageable ]
+
+/logs:
+  type: 
+    ro_collection:
+      get_example: !include examples/logs_pageable.raml
+  get:
+    is: [ 
+      traits.pageable, traits.searchable: {
+          description: "with valid searchable fields: `type` (enum)", 
+          example: "communication"
+        }
+    ]
+  
+  /{logId}:
+    type: 
+      ro_item:
+        item_id: "logId"
+        example: !include examples/log.raml
+
+/personnel:
+  displayName: available personnel
+  description: Collection of available personnel
+  type: 
+    ro_collection:
+      get_example: !include examples/personnel_pageable.raml
+
+  get:
+    displayName: Get personnel (collection)
+    description: Get collection of available personnel. 
+    is: [ 
+          traits.pageable,
+          traits.expand: {fields: "name,address,competences"},
+          traits.searchable: {
+              description: "with valid searchable fields: `name` (string), `approved` (date-only) and `expires` (date-only)", 
+              example: !include examples/search/personnel.raml
+          }
+        ]
+
+  /{personnelId}:
+    type: 
+      ro_item:
+        item_id: "personnelId"
+        example: !include examples/personnel_kari.raml
+
+    get:
+      displayName: Get personnel (item)
+      is: [traits.expand: {fields: "name,address,competences"}]
+
+/transports:
+  displayName: available transports
+  description: Collection of available transports
+  type: 
+    ro_collection:
+      get_example: !include examples/transports_pageable.raml
+
+  get:
+    description: Get collection of available transports. 
+    is: [ 
+          traits.pageable,
+          traits.expand: {fields: "type,identifier"},
+          traits.searchable: {
+              description: "with valid searchable fields: `type` (string), `identifier` (string)", 
+              example: !include examples/search/transports.raml
+          }
+        ]
+
+  /{transportId}:
+    type: 
+      ro_item:
+        item_id: "transportId"
+        example: !include examples/transport.raml
+
+    get:
+      displayName: Get transport
+      is: [traits.expand: {fields: "type,identifier"}]
+      
+# TODO
+# =======================================================
+# 1. Complete securing API with oauth2
+# 2. Add errors to responses
+# 3. Complete Refactoring using `resourceTypes` and `traits`
+# 4. Complete Spec-Driven Development 

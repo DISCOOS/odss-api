@@ -1,0 +1,11 @@
+#%RAML 1.0 DataType
+displayName: attendence
+type: object
+properties: 
+  personnel:
+    type: !include personnel.raml
+    required: true
+  timestamps:
+    type: array
+    items: !include timestamp.raml
+    required: false  

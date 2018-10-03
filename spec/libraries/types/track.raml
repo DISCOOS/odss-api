@@ -1,0 +1,12 @@
+#%RAML 1.0 DataType
+displayName: track
+description: A polyline (open line segment) is a part of a line that is bounded by two distinct endpoints, and contains every point on the line between its endpoints. Each point is associated with a timestamp.
+
+type: 
+  properties:
+    timestamp: 
+      type: datetime
+      required: true
+    point: 
+      type: !include point.raml
+      required: true

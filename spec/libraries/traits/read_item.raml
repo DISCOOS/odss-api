@@ -1,0 +1,19 @@
+#%RAML 1.0 Trait
+displayName: Get <<resourcePathName|!singularize>>
+description: Get <<resourcePathName|!singularize>> with `<<item_id>> = {<<item_id>>}`.
+
+uses: 
+  types: ../types.raml
+
+responses: 
+  200:
+    body:
+      application/json:
+        type: types.<<resourcePathName|!singularize>>
+        example: <<example>>
+  404:
+    body:
+      application/json:
+        type: object
+        example: 
+          message: <<resourcePathName|!singularize>> not found

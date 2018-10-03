@@ -1,0 +1,17 @@
+#%RAML 1.0 DataType
+displayName: competence
+
+type: object
+properties:
+  name: 
+    type: string
+    required: true
+    description: Competence name
+  approved:
+    type: date-only
+    required: false
+    description: Competence approved at given datetime
+  expires:
+    type: date-only
+    required: false
+    description: Competence expires at given datetime

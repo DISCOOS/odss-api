@@ -1,0 +1,37 @@
+#%RAML 1.0 Trait
+usage: Used in combination with trait `read_collection`
+
+uses: 
+  types: ../types.raml
+
+queryParameters:
+  startAt:    
+    required: false
+    description: |
+      Start at the index of the first <<resourcePathName|!singularize>> to return (0-based). 
+      Must be 0 or a multiple of `maxResults`.
+  maxResults:    
+    required: false
+    description: |
+      a hint as to the the maximum number of <<resourcePathName|!singularize>> to return in each call. 
+      Note that the server reserves the right to impose a `maxResults` limit that is lower than the value that provided. 
+      When this happens the results will be truncated. 
+      Callers should always check the returned `maxResults` to determine the value that is effectively being used.
+responses:
+  200:
+    body:
+      application/json:
+        type: 
+          properties:
+            startAt: 
+              type: integer
+              required: true
+            maxResults: 
+              type: integer
+              required: true
+            total:
+              type: integer
+              required: true
+            <<resourcePathName>>: 
+              type: array
+              items: types.<<resourcePathName|!singularize>>

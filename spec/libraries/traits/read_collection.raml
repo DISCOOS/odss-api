@@ -1,0 +1,18 @@
+#%RAML 1.0 Trait
+displayName: Get <<resourcePathName>>
+description: Get a collection of <<resourcePathName>>.
+
+uses: 
+  types: ../types.raml
+
+responses:
+  200:
+    body:
+      application/json:
+        type: 
+          properties:
+            <<resourcePathName>>: 
+              type: array
+              items: types.<<resourcePathName|!singularize>>
+        example:
+          <<example>>

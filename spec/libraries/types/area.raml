@@ -1,0 +1,14 @@
+#%RAML 1.0 DataType
+displayName: area
+
+type: object
+properties: 
+  type:
+    enum: [General, Operational, Search, Rescue, Accident]
+    required: true
+    examples:
+      General: Operational
+  geometries:
+    type: array
+    items: !include geometry.raml
+    required: true

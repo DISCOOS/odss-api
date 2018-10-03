@@ -1,0 +1,30 @@
+{
+  "name": "norwegian-red-cross-operations-api",
+  "version": "0.0.0",
+  "description": "API for Norwegian Red Cross Operational Decision Support System (ODSS)",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mulesoft/raml-javascript-generator.git"
+  },
+  "keywords": [
+    "raml-api"
+  ],
+  "author": "MuleSoft, Inc.",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/mulesoft/raml-javascript-generator/issues"
+  },
+  "homepage": "https://github.com/mulesoft/raml-javascript-generator",
+  "dependencies": {
+    "client-oauth2": "^2.1.0",
+    "xtend": "^4.0.1",
+    "request-promise": "^4.2.2",
+    "request": "^2.34",
+    "setprototypeof": "^1.0.1",
+    "query-string": "^5.0.0"
+  }
+}

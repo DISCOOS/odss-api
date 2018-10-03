@@ -1,0 +1,12 @@
+#%RAML 1.0 ResourceType
+displayName: <<resourcePathName>>
+description: A collection of <<resourcePathName>>.
+
+uses: 
+  traits: ../libraries/traits.raml
+
+get:  
+  is: [traits.secured, traits.read_collection: {example: <<get_example>>}]
+
+post:    
+  is: [traits.secured, traits.add_item: {example: <<post_example>>}]

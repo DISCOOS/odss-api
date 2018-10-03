@@ -1,0 +1,24 @@
+#%RAML 1.0 DataType
+displayName: point
+description: Point in geodesic line on earth surface
+
+type: !include geometry.raml
+properties: 
+  lat: 
+    type: number
+    required: true
+    description: Latitude (decimal degrees)
+  lon: 
+    type: number
+    required: true
+    description: Longitude (decimal degrees)
+  alt: 
+    type: number
+    required: false
+    default: null
+    description: Altitude (meters)  
+  acc: 
+    type: number
+    required: false
+    default: null
+    description: Accuracy (meters)
